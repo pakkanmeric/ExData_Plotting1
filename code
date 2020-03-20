@@ -1,0 +1,29 @@
+data <- read.table("household_power_consumption.txt",sep = ";",skip = 66637, nrow = 2880)
+
+data$V1 <- strptime(paste(data$V1, data$V2, sep = " ", collapse = NULL), "%d/%m/%Y %H:%M:%S")
+data = data[,-2]
+
+# plot1
+hist(data$V3, col = 'red', main = 'Global Active Power', xlab = 'Global Active Power(kilowatts)')
+
+# plot2
+plot(data$V1, data$V3, type = 'l', xlab = '', ylab = 'Global Active Power(kilowatts)')
+
+# plot3
+plot(data$V1, data$V7, col = 'black', type = 'l', xlab = '', ylab = 'Energy sub metering')
+lines(data$V1, data$V8, col="red")
+lines(data$V1, data$V9, col="blue")
+legend("topright", inset = .01, legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), 
+       col=c("black","red","blue"),lty = 1, box.lty=0, ncol=1)
+
+# plot4
+par(mfrow=c(2,2))
+plot(data$V1, data$V3, type = 'l', xlab = '', ylab = 'Global Active Power')
+plot(data$V1, data$V5, type = 'l', xlab = 'datetime', ylab = 'Voltage')
+plot(data$V1, data$V7, col = 'black', type = 'l', xlab = '', ylab = 'Energy sub metering')
+lines(data$V1, data$V8, col="red")
+lines(data$V1, data$V9, col="blue")
+legend("topright", inset = .01, legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), 
+       col=c("black","red","blue"),lty = 1, box.lty=0, ncol=1)
+plot(data$V1, data$V4, type = 'l', xlab = 'datetime', ylab = 'Global_reactive_power')
+
